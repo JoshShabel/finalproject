@@ -3,8 +3,14 @@ import'./globals.css'
 import {useEffect, useEffectEvent, useState} from "react";
 import MainCards from "../components/MainCards";
 import Card from "../components/Card";
+import { useContext } from 'react';
+import ModeContext from "../components/ModeContext.js";
+import Navbar from "../components/Navbar"
+
+
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+
 export default function Home() {
     /*    const profiles = [
           {name: "John Doe", title: "Software Engineer", email: "john@example.com", img: image1},
@@ -18,10 +24,31 @@ export default function Home() {
         titleArray = [...titleSet]*/
 
     const [textInput, setTextInput] = useState("");
+    const { isOn, toggleOn } = useContext(ModeContext);
     const [job, setJob] = useState('None Chosen');
+    const [profile, setProfile] = useState([]);
+
     const [modeToggle, setModeToggle] = useState(true);
     const [formState, setFormState] = useState(0);
     const [loading, setLoading] = useState(true);
+/*    const handlerFunction = (data) => {
+        setProfile(data)
+    }
+        if (profile.length === 0){
+
+        try{
+            MainCards(handlerFunction)
+        }catch (e) {
+            console.log(e)
+        }
+    }*/
+
+/*    const enduser = await prisma.enduser.findUnique({
+        where: {
+            email: "ava2@purdue.edu",
+        },
+        include: {notes: true}
+    })*/
 
 /*     const fetchData = useEffectEvent(async () => {
 
@@ -50,9 +77,12 @@ export default function Home() {
 
     return (
         <div>
-            <div className="appBody">
+            <div className={isOn ? "appBodyDark" : "appBodyLight"}>
+                <Navbar></Navbar>
                 <h1>My React App</h1>
-               {/* <Wrapper children={<Introduction/>}/>
+
+
+                {/* <Wrapper children={<Introduction/>}/>
                 <ProfileForm handleFormState={handleFormState}></ProfileForm>*/}
                 {/*<label>Choose Job:</label>
                 <select value={job} onChange={handleChange}>
@@ -78,16 +108,18 @@ export default function Home() {
                 </button>
                 <br/>
 
+
                 <MainCards></MainCards>
-                {/*
+
+                return (
                 <div className="darkCardDisplayArea">
                     {
-                        profiles.map((profile) => (
-                            <Card key={profile.email} name={profile.name} email={profile.email} password={profile.password} notes={profile.notes}/>
+                        (profile.length === 0) ? null : profile.map((note) => (
+                            <Card key={note.id} id={note.id} name={note.name} contents={note.contents}/>
                         ))
-
                     }
-                </div>*/}
+                </div>
+                )
                 <footer></footer>
             </div>
         </div>
