@@ -2,7 +2,6 @@
 const {PrismaClient} = require( "@prisma/client")
 const prisma = new PrismaClient()
 import "../app/globals.css";
-import MainCardsClient from "./MainCardsClient";
 import Card from "./Card";
 
 
@@ -12,7 +11,7 @@ async function MainCards() {
         try{
             const enduser = await prisma.enduser.findUnique({
                 where: {
-                    email: "ava2@purdue.edu",
+                    email: "ava@purdue.edu",
                 },
                 include: {notes: true}
             })
