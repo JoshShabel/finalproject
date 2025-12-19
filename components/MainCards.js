@@ -1,12 +1,15 @@
+
 const {PrismaClient} = require( "@prisma/client")
 const prisma = new PrismaClient()
 import "../app/globals.css";
 import MainCardsClient from "./MainCardsClient";
+import Card from "./Card";
 
 
 async function MainCards() {
     {
-
+        var result = []
+        try{
             const enduser = await prisma.enduser.findUnique({
                 where: {
                     email: "ava2@purdue.edu",
@@ -23,10 +26,20 @@ async function MainCards() {
                 }
             })
 
-            const result = enduser.notes;
+            result = enduser.notes;
+        }catch (e) {
+            console.log("error")
+        }
 
-        return(
-            <MainCardsClient result={result}></MainCardsClient>
+
+        return (
+            <div className="darkCardDisplayArea">
+                {
+                    result.map((note) => (
+                        <Card key={note.id} id={note.id} name={note.name} contents={note.contents}/>
+                    ))
+                }
+            </div>
         )
 
 /*            const notes = await prisma.enduser.findFirst({
